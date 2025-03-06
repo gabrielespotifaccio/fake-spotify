@@ -23,13 +23,20 @@
             try {
                 const response = await fetch(sheetURL);
                 const data = await response.text();
+                console.log("📥 Dati ricevuti dal CSV:", data); // Debug per vedere cosa arriva
+
                 const rows = data.split("\n").slice(1); // Ignora l'intestazione
 
                 const playlistList = document.getElementById("playlists");
                 playlistList.innerHTML = ""; // Pulisce la lista prima di aggiornarla
 
+                if (rows.length === 0) {
+                    playlistList.innerHTML = "<p>❌ Nessuna playlist trovata. Controlla il Google Sheet.</p>";
+                }
+
                 rows.forEach(row => {
                     const playlistName = row.replace(/"/g, '').trim();
+                    console.log("🎵 Playlist trovata:", playlistName); // Debug per ogni playlist trovata
 
                     if (playlistName) {
                         const li = document.createElement("li");
@@ -38,7 +45,8 @@
                     }
                 });
             } catch (error) {
-                console.error("Errore nel caricamento delle playlist:", error);
+                console.error("❌ Errore nel caricamento delle playlist:", error);
+                document.getElementById("playlist-container").innerHTML = "<p>❌ Errore nel caricamento. Controlla la Console.</p>";
             }
         }
 
