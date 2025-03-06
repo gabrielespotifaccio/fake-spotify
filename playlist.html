@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1 id="playlist-title">Playlist</h1>
+    </header>
+
+    <button onclick="goBack()">⬅ Torna alle Playlist</button>
+
+    <div id="songs-container">
+        <ul id="songs-list"></ul>
+    </div>
+
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        const playlistName = getQueryParam("playlist");
+        document.getElementById("playlist-title").textContent = playlistName;
+
+        const sheetBaseURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIUYzhqJJ9u8u8ahMXzIeSQTi61xeS1o0blrXy4aX4UT6RZQOm2_OuOhztHMckDGAPpP6Q5I-bdSmj/gviz/tq?tqx=out:csv&sheet=";
+        const sheetURL = sheetBaseURL + encodeURIComponent(playlistName);
+
+        async function loadSongs() {
+            try {
+                const response = await fetch(sheetURL);
+                const data = await response.text();
+                const rows = data.split("\n").slice(1); // Ignora l'intestazione
+
+                const songList = document.getElementById("songs-list");
+                songList.innerHTML = ""; // Pulisce la lista prima di aggiornarla
+
+                rows.forEach(row => {
+                    const columns = row.split(",");
+                    if (columns.length < 3) return;
+
+                    const title = columns[1].replace(/"/g, '').trim(); // Titolo in colonna B
+                    const url = columns[2].replace(/"/g, '').trim(); // Link in colonna C
+
+                    const li = document.createElement("li");
+                    li.innerHTML = `<a href="${url}" target="_blank">${title}</a>`;
+                    li.onclick = (event) => {
+                        event.preventDefault();
+                        window.open(url, "_blank");
+                    };
+                    songList.appendChild(li);
+                });
+            } catch (error) {
+                console.error("Errore nel caricamento delle canzoni:", error);
+            }
+        }
+
+        function goBack() {
+            window.location.href = "index.html";
+        }
+
+        loadSongs();
+    </script>
+</body>
+</html>
