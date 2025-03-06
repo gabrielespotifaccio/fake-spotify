@@ -2,9 +2,9 @@ body {
     font-family: Arial, sans-serif;
     background-color: #121212;
     color: white;
+    text-align: center;
     margin: 0;
     padding: 0;
-    text-align: center;
 }
 
 header {
@@ -15,36 +15,44 @@ header {
     color: white;
 }
 
-#playlist-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+#playlist-container, #songs-container {
     margin-top: 20px;
 }
 
-.playlist {
-    display: flex;
-    align-items: center;
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
     background-color: #282828;
-    border-radius: 10px;
-    margin: 10px;
-    padding: 10px;
+    padding: 15px;
+    margin: 10px auto;
     width: 80%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.playlist:hover {
-    background-color: #333;
-}
-
-.playlist img {
-    width: 60px;
-    height: 60px;
-    border-radius: 5px;
-    margin-right: 15px;
-}
-
-.playlist span {
+    border-radius: 10px;
     font-size: 18px;
+}
+
+a {
+    color: #1DB954;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #1ed760;
+}
+
+button {
+    background-color: #1DB954;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #1ed760;
 }
