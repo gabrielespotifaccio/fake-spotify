@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Spotify 🎵</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <header>
+        <h1>🎶 Fake Spotify 🎶</h1>
+    </header>
+
+    <div id="playlist-container">
+        <!-- Le playlist vengono generate dinamicamente -->
+    </div>
+
+    <script>
+        // Playlist con miniature
+        const playlists = [
+            { 
+                title: "Ignoranza", 
+                url: "https://www.youtube.com/playlist?list=PLF4xsKeHlUNzl2kz65vF5H178rBU_pT1A",
+                image: "https://img.youtube.com/vi/Oj18ZlshsyU/hqdefault.jpg"
+            },
+            { 
+                title: "Sounds", 
+                url: "https://www.youtube.com/playlist?list=PLF4xsKeHlUNwW29LnbZBsjUUf924Aw2pY",
+                image: "https://img.youtube.com/vi/TlXjxpdFPMk/hqdefault.jpg"
+            },
+            { 
+                title: "Rap", 
+                url: "https://www.youtube.com/playlist?list=PLF4xsKeHlUNzruDZvBAo_kbgTnXXmVMke",
+                image: "https://img.youtube.com/vi/3XqZ5btsb9U/hqdefault.jpg"
+            }
+        ];
+
+        const container = document.getElementById("playlist-container");
+
+        playlists.forEach(playlist => {
+            const div = document.createElement("div");
+            div.classList.add("playlist");
+
+            const img = document.createElement("img");
+            img.src = playlist.image;
+            img.alt = playlist.title;
+
+            const title = document.createElement("span");
+            title.textContent = playlist.title;
+
+            div.appendChild(img);
+            div.appendChild(title);
+            div.onclick = () => {
+                window.open(playlist.url, "_blank");
+            };
+
+            container.appendChild(div);
+        });
+    </script>
+</body>
+</html>
